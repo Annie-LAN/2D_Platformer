@@ -40,4 +40,25 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Spike"))        
+        {            
+            GameOver();
+            Debug.Log("Spike");
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            GameOver();
+            Debug.Log("Enemy");
+        }
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("Game Over");
+    }
 }

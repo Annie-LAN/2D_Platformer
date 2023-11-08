@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,7 +8,8 @@ public class Player : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
     bool isGrounded;
-
+    
+    public AudioManager audioManager;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -47,6 +46,16 @@ public class Player : MonoBehaviour
             GameOver();
             Debug.Log("Spike");
         }
+        else if (other.CompareTag("Finish"))
+        {
+            Win();
+        }
+        else if (other.CompareTag("Coin"))
+        {
+            Debug.Log("coin");
+            audioManager.PlayCoin();
+            Destroy(other.gameObject);            
+        }
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -60,5 +69,14 @@ public class Player : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("Game Over");
+        audioManager.PlayGameOver();
     }
+    
+    private void Win()
+    {
+        Debug.Log("Win");
+        audioManager.PlayWin();
+    }
+
+
 }

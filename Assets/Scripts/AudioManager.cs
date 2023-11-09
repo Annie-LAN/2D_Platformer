@@ -9,16 +9,12 @@ public class AudioManager : MonoBehaviour
 
     public void PlayGameOver()
     {
-        audioSource.PlayOneShot(gameOverSound);
-
-        // TODO: displaying a game over screen
+        audioSource.PlayOneShot(gameOverSound);      
     }
 
     public void PlayWin()
     {
         audioSource.PlayOneShot(winSound);
-
-        // displaying a victory screen
     }
 
     public void PlayCoin()

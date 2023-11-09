@@ -8,8 +8,10 @@ public class Player : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
     bool isGrounded;
+    public float lowerBound = -17f;
     
     public AudioManager audioManager;
+    public UI ui;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -37,22 +39,29 @@ public class Player : MonoBehaviour
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
+
+        // game over if drop below the screen
+        if (transform.position.y < lowerBound)
+        {
+            audioManager.PlayGameOver();
+            ui.GameOver(false);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Spike"))        
-        {            
-            GameOver();
-            Debug.Log("Spike");
+        {
+            audioManager.PlayGameOver();
+            ui.GameOver(false);
         }
         else if (other.CompareTag("Finish"))
         {
-            Win();
+            audioManager.PlayWin();
+            ui.GameOver(true);
         }
         else if (other.CompareTag("Coin"))
         {
-            Debug.Log("coin");
             audioManager.PlayCoin();
             Destroy(other.gameObject);            
         }
@@ -61,22 +70,9 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            GameOver();
-            Debug.Log("Enemy");
+            audioManager.PlayGameOver();
+            ui.GameOver(false);
         }
-    }
-
-    private void GameOver()
-    {
-        Debug.Log("Game Over");
-        audioManager.PlayGameOver();
-    }
-    
-    private void Win()
-    {
-        Debug.Log("Win");
-        audioManager.PlayWin();
-    }
-
+    }   
 
 }

@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
-        // game over if drop below the screen
+        // game over if drop out of the screen
         if (transform.position.y < lowerBound)
         {
             audioManager.PlayGameOver();
@@ -58,11 +58,13 @@ public class Player : MonoBehaviour
         else if (other.CompareTag("Finish"))
         {
             audioManager.PlayWin();
+            ui.AddScore(100);
             ui.GameOver(true);
         }
         else if (other.CompareTag("Coin"))
         {
             audioManager.PlayCoin();
+            ui.AddScore(10);
             Destroy(other.gameObject);            
         }
     }

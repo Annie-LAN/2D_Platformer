@@ -7,7 +7,13 @@ public class UI : MonoBehaviour
     public GameObject gameOverCanvas;
     public TextMeshProUGUI gameOverText;
     public GameObject backgroundPanel;
-
+    public TextMeshProUGUI scoreText;
+    private int score = 0;
+   
+    public void Update()
+    {
+        scoreText.text = "Score: " + score.ToString();
+    }
     public void GameOver(bool Win)    
     {
         backgroundPanel.SetActive(true);
@@ -21,6 +27,11 @@ public class UI : MonoBehaviour
         {
             gameOverText.text = "You Lose";
         }
+    }
+
+    public void AddScore(int amount)
+    {
+        score += amount;
     }
 
 }
